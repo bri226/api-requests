@@ -2,7 +2,7 @@ import pyodbc
 
 def connect_to_db():
     conn = pyodbc.connect('Driver={SQL Server};'
-                          'Server=localhost\\SQLEXPRESS;'  # Asegúrate de tener el doble backslash
+                          'Server=localhost\\SQLEXPRESS;'  # Asegurarse de tener el doble backslash
                           'Database=DB_BRILLITT;'
                           'Trusted_Connection=yes;')
 
