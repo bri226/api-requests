@@ -2,9 +2,13 @@ import pyodbc
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from colorama import Fore
+from dotenv import load_dotenv
+import os
 
-client_id = 'f3074e88dcee4d308c1258ab616be574'
-client_secret = '1d933a2161dc4d4cbd30608af2d9aeed'
+load_dotenv()
+
+client_id = os.getenv('SPOTIFY_CLIENT_ID')
+client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 credentials = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=credentials)

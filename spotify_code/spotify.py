@@ -2,13 +2,18 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from colorama import Fore
 import time
+from dotenv import load_dotenv
+import os
 
-client_id = 'f3074e88dcee4d308c1258ab616be574'
-client_secret = '1d933a2161dc4d4cbd30608af2d9aeed'
+load_dotenv()
+
+client_id = os.getenv('SPOTIFY_CLIENT_ID')
+client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
 
 credentials = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=credentials)
 
+# Consulta del artista
 artist_name = 'Little Mix'
 result = sp.search(q='artist:' + artist_name, type='artist')
 artist = result['artists']['items'][0]
@@ -34,8 +39,3 @@ for album in albums['items']:
         print(f"Previsualización: {track_details['preview_url']}")
     print("*************************")
     time.sleep(5)  # Retraso para evitar exceder los límites de la API
-    
-print
-
-
-

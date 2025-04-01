@@ -1,14 +1,16 @@
 from googleapiclient.discovery import build
 import pyodbc
+from dotenv import load_dotenv
+import os
 
-api_key = 'AIzaSyBD9eHrHmsHrTQA-eV87CR0ZB2T2ANg5TE'
+load_dotenv()
+api_key = os.getenv('YOUTUBE_API_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 def connect_to_db():
-    # Conexión utilizando autenticación de Windows
     try:
         conn = pyodbc.connect('Driver={SQL Server};'
-                        'Server=localhost\\SQLEXPRESS;'  # Asegúrate de tener el doble backslash
+                        'Server=localhost\\SQLEXPRESS;'
                         'Database=DB_BRILLITT;'
                         'Trusted_Connection=yes;')
         return conn
@@ -80,7 +82,6 @@ def insert_video_info(videos, conn):
 
 
 def main():
-    api_key = 'AIzaSyBD9eHrHmsHrTQA-eV87CR0ZB2T2ANg5TE'
     youtube = build('youtube', 'v3', developerKey=api_key)
     channel_id = 'UCYLNGLIzMhRTi6ZOLjAPSmw'
     # channel_id = 'UCqECaJ8Gagnn7YCbPEzWH6g' # TAYLOR SWIFT

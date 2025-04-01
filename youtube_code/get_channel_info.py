@@ -1,13 +1,14 @@
 from googleapiclient.discovery import build
 import json
+from dotenv import load_dotenv
+import os
 
-# Reemplaza 'YOUR_API_KEY' con tu clave de API real
-api_key = 'AIzaSyBD9eHrHmsHrTQA-eV87CR0ZB2T2ANg5TE'
+load_dotenv()
+api_key = os.getenv('YOUTUBE_API_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 def clean_json(data):
 
-    # Procesa cada video en la respuesta
     for video in data.get('items', []):
         title = video['snippet']['title']
         video_id = video['id']
@@ -17,7 +18,7 @@ def clean_json(data):
         published_at = video['snippet']['publishedAt']
         description = video['snippet']['description']
         
-        # Imprime los detalles del video
+
         print(f"Video Title: {title}")
         print(f"Video ID: {video_id}")
         print(f"Views: {view_count}")
@@ -45,8 +46,7 @@ def print_channel_info(data):
         
 def consulta_canal():
     
-    # Obtén detalles del canal por ID de canal
-    channel_id = 'UCqECaJ8Gagnn7YCbPEzWH6g'  # Por ejemplo, ID del canal de Google Developers
+    channel_id = 'UCqECaJ8Gagnn7YCbPEzWH6g'
     response = youtube.channels().list(
         part='snippet,contentDetails,statistics',
         id=channel_id
@@ -56,12 +56,11 @@ def consulta_canal():
 
 def videos_mas_vistos():
     
-    # Solicita la lista de los videos más populares
     response = youtube.videos().list(
-        part='snippet,statistics', # Información a obtener
-        chart='mostPopular',                      # Especifica que quieres los videos más populares
-        # regionCode='PE',                          # Opcional: código del país para filtrar los videos populares en esa región
-        maxResults=10                             # Cantidad de resultados a retornar
+        part='snippet,statistics',
+        chart='mostPopular', 
+        # regionCode='PE',
+        maxResults=10
     ).execute()
 
     # Imprime la respuesta
